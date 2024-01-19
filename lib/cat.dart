@@ -22,9 +22,9 @@ class _CatPageState extends State<CatPage> {
   Future<void> fetchCatFact() async {
     const String url = 'https://cat-fact.herokuapp.com/facts';
     final response = await dio.get(url);
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       List<String> result = List<String>.empty(growable: true);
-      for(final fact in response.data) {
+      for (final fact in response.data) {
         result.add(fact['text']);
       }
       setState(() {
@@ -40,21 +40,21 @@ class _CatPageState extends State<CatPage> {
         title: const Text('Cat Facts'),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-    setState(() {
-    index = index + 1 < text.length ? index + 1 : 0;
-    });
-    },
-      child: const Icon(Icons.refresh),
-    ),
-    body: Padding(
-    padding: const EdgeInsets.all(64.0),
-    child: Center(
-    child: text.isNotEmpty
-    ? Text(text[index])
-        : const CircularProgressIndicator(),
-    ),
-    ),
+        onPressed: () {
+          setState(() {
+            index = index + 1 < text.length ? index + 1 : 0;
+          });
+        },
+        child: const Icon(Icons.refresh),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(64.0),
+        child: Center(
+          child: text.isNotEmpty
+              ? Text(text[index])
+              : const CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }

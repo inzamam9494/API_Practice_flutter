@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:api_learn/Models/posts_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,21 +11,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<PostsModel> postList = [];
 
-  late Future<List<Map>?> postList ;
-
-
-  @override
-  void initState() {
-    super.initState();
-    postList = getPostApi();
-  }
-
-  Future<List<Map>?> getPostApi () async{
-    final response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
-    List<Map<String, dynamic>> data = jsonDecode(response.body.toString());
-    if(response.statusCode == 200){
-      return data;
+  Future<List<PostsModel>> getPostApi() async {
+    final response =
+        await get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
+    var data = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> i in data) {
+        postList.add(PostsModel.fromJson(i));
+      }
+      return postList;
+    } else {
+      return postList;
     }
   }
 
@@ -34,24 +31,43 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("API Practice"),
       ),
       body: Column(
         children: [
-          FutureBuilder(future: postList,
-              builder: (context,snapshot){
-                if(snapshot.hasData && snapshot.data != null){
-                  return ListView.builder(itemBuilder: (context,index){
-                    PostsModel postModel = PostsModel.fromJson(snapshot.data?[index]);
-                    return ListTile(title: Text(postModel.title));
+          Expanded(
+            child: FutureBuilder(
+                future: getPostApi(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return ListView.builder(
+                        itemCount: postList.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Title",
+                                style: TextStyle(fontSize: 20,
+                                fontWeight: FontWeight.bold),),
+                                Text(postList[index].title.toString()),
+                                const Text("Description",
+                                  style: TextStyle(fontSize: 20,
+                                      fontWeight: FontWeight.bold),),
+                                Text(postList[index].body.toString())
+                              ],
+                            ),
+                          );
+                        });
                   }
-                  );
-                }else{
-                  return const CircularProgressIndicator();
-                }
-              })
+                }),
+          )
         ],
       ),
-    );;
+    );
   }
 }
