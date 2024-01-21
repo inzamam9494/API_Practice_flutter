@@ -15,9 +15,7 @@ class PhotoScreen extends StatefulWidget {
 
 class _PhotoScreenState extends State<PhotoScreen> {
   Dio dio = Dio();
-  List<String> title = <String>[];
-  List<String> url = <String>[];
-  int index = 0;
+ final photos = [];
 
   @override
   void initState() {
@@ -28,18 +26,10 @@ class _PhotoScreenState extends State<PhotoScreen> {
   Future<void> fetchPhoto() async {
     final response = await dio.get(link);
     if (response.statusCode == 200) {
-      List<String> result = List<String>.empty(growable: true);
-      List<String> result2 = List<String>.empty(growable: true);
-      for (final photos in response.data) {
-        result.add(photos['title']);
+      for (final item in response.data) {
+        photos.add(item);
       }
-      for (final photos in response.data) {
-        result2.add(photos['url']);
-      }
-      setState(() {
-        title = result;
-        url = result2;
-      });
+      setState(() {});
     }
   }
 
@@ -51,11 +41,11 @@ class _PhotoScreenState extends State<PhotoScreen> {
           title: const Text("Photos"),
         ),
         body: ListView.builder(
-          itemCount: title.length,
+          itemCount: photos.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(title[index]),
-              leading: Image.network(url[index]),
+              title: Text("${photos[index]['title']}"),
+              leading: Image.network("${photos[index]['url']}"),
             );
           },
         ));
