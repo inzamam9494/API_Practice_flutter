@@ -1,4 +1,5 @@
 import 'package:api_learn/cat.dart';
+import 'package:api_learn/exampleThree.dart';
 import 'package:api_learn/home_screen.dart';
 import 'package:api_learn/photo_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: PhotoScreen(),
+      home: ExampleThree(),
     );
   }
 }

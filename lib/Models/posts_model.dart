@@ -24,7 +24,7 @@ class PostsModel {
 
 
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsodn() {
     final map = <String, dynamic>{};
     map['userId'] = userId;
     map['id'] = id;
