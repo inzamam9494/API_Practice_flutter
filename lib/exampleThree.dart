@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'Models/userModel.dart';
 import 'package:http/http.dart';
+
+import 'Models/userModel.dart';
 
 const url = "https://jsonplaceholder.typicode.com/users";
 
@@ -50,13 +51,38 @@ class _ExampleThreeState extends State<ExampleThree> {
                  return Card(
                    child: Column(
                      children: [
-                       Text(snapshot.data![index].email.toString())
+                       ReusableRow(title: 'Username', value: snapshot.data![index].username.toString()),
+                       ReusableRow(title: 'Email', value: snapshot.data![index].email.toString()),
+                       ReusableRow(title: 'Address', value: snapshot.data![index].address!.city.toString()),
+                       ReusableRow(title: 'lng', value: snapshot.data![index].address!.geo!.lng.toString())
                      ],
                    ),
                  );
                  });
            }
         },
+      ),
+    );
+  }
+}
+
+class ReusableRow extends StatelessWidget {
+  final String title, value;
+   const ReusableRow({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold
+          ),),
+          Text(value)
+        ],
       ),
     );
   }
