@@ -1,3 +1,5 @@
+import 'package:api_learn/SignUp/ImageUpload.dart';
+import 'package:api_learn/SignUp/Upload_image.dart';
 import 'package:api_learn/SignUp/signUp.dart';
 import 'package:api_learn/WithDio/cat.dart';
 import 'package:api_learn/WithDio/threeExample.dart';
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SignUp(),
+      home: ImageUpload(),
     );
   }
 }
