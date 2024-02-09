@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-const url = "https://jsonplaceholder.typicode.com/users";
+// const url = "https://jsonplaceholder.typicode.com/users";
+const url = "https://api.rootnet.in/covid19-in/stats/latest";
 
 class ThreeExample extends StatefulWidget {
   const ThreeExample({super.key});
@@ -48,10 +49,10 @@ class _ThreeExampleState extends State<ThreeExample> {
                     child: Card(
                       child: Column(
                         children: [
-                          ReusableRow(title: 'Name', value: userList[index]['name'].toString()),
-                          ReusableRow(title: 'Email', value: userList[index]['email'].toString()),
-                          ReusableRow(title: 'Address', value: '${userList[index]['address']['city']}, ${userList[index]['address']['zipcode']}'),
-                          ReusableRow(title: 'lng', value: userList[index]['address']['geo']['lng'].toString())
+                          ReusableRow(title: 'Name', value: userList[index]['data']['regional']['loc'].toString()),
+                          // ReusableRow(title: 'Email', value: userList[index]['email'].toString()),
+                          // ReusableRow(title: 'Address', value: '${userList[index]['address']['city']}, ${userList[index]['address']['zipcode']}'),
+                          // ReusableRow(title: 'lng', value: userList[index]['address']['geo']['lng'].toString())
                         ],
                       ),
                     ),
